@@ -32,16 +32,17 @@ public class Tag {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || !(o instanceof Tag)) return false;
+        if (this == o)
+            return true;
+        if (o == null || !(o instanceof Tag))
+            return false;
         Tag tag = (Tag) o;
         return id != null && id.equals(tag.id);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode(); 
+        return getClass().hashCode();
     }
 
-    
 }
