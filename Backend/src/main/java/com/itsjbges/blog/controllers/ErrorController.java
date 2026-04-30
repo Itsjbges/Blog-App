@@ -15,37 +15,37 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ErrorController {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> handleException(Exception ex) {
-        log.error("Caugt exception", ex);
-        ApiErrorResponse error = ApiErrorResponse.builder()
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .message("An unexpected error occured")
-                .build();
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<ApiErrorResponse> handleException(Exception ex) {
+                log.error("Caugt exception", ex);
+                ApiErrorResponse error = ApiErrorResponse.builder()
+                                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                                .message("An unexpected error occured")
+                                .build();
 
-        return new ResponseEntity<>(
-                error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+                return new ResponseEntity<>(
+                                error, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
-        ApiErrorResponse error = ApiErrorResponse.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(ex.getMessage())
-                .build();
+        @ExceptionHandler(IllegalArgumentException.class)
+        public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
+                ApiErrorResponse error = ApiErrorResponse.builder()
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .message(ex.getMessage())
+                                .build();
 
-        return new ResponseEntity<>(
-                error, HttpStatus.BAD_REQUEST);
-    }
+                return new ResponseEntity<>(
+                                error, HttpStatus.BAD_REQUEST);
+        }
 
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<ApiErrorResponse> handleIllegalStateException(IllegalArgumentException ex) {
-        ApiErrorResponse error = ApiErrorResponse.builder()
-                .status(HttpStatus.CONFLICT.value())
-                .message(ex.getMessage())
-                .build();
+        @ExceptionHandler(IllegalStateException.class)
+        public ResponseEntity<ApiErrorResponse> handleIllegalStateException(IllegalArgumentException ex) {
+                ApiErrorResponse error = ApiErrorResponse.builder()
+                                .status(HttpStatus.CONFLICT.value())
+                                .message(ex.getMessage())
+                                .build();
 
-        return new ResponseEntity<>(
-                error, HttpStatus.CONFLICT);
-    }
+                return new ResponseEntity<>(
+                                error, HttpStatus.CONFLICT);
+        }
 }

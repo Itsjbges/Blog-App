@@ -17,7 +17,6 @@ public class ApiErrorResponse {
     private String message;
     private List<FieldError> errors;
 
-
     @Data
     @Builder
     @NoArgsConstructor
