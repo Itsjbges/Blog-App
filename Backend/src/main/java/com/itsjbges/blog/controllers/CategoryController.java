@@ -1,22 +1,23 @@
 package com.itsjbges.blog.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.itsjbges.blog.domain.dtos.CategoryDto;
-import com.itsjbges.blog.domain.entities.Category;
-import com.itsjbges.blog.mappers.CategoryMapper;
-import com.itsjbges.blog.services.CategoryService;
-
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.itsjbges.blog.domain.dtos.CategoryDto;
+import com.itsjbges.blog.domain.dtos.CreateCategoryRequest;
+import com.itsjbges.blog.domain.entities.Category;
+import com.itsjbges.blog.mappers.CategoryMapper;
+import com.itsjbges.blog.services.CategoryService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(path = "/api/v1/categories")
@@ -29,17 +30,23 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<CategoryDto>> listCategories() {
         List<CategoryDto> categories = categoryService.listCategories()
-                    .stream().map(categoryMapper::toDto)
-                    .toList();
-        
+                .stream().map(categoryMapper::toDto)
+                .toList();
+
         return ResponseEntity.ok(categories);
     }
-    
+
     @PostMapping
-    public ResponseEntity<CategoryDto> createCategory(){
-        //TODO: process POST request
-        
-        return null;
+    public ResponseEntity<CategoryDto> createCategory(
+            @Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
+
+        Category categoryToCreate = categoryMapper.toEntity(createCategoryRequest);
+
+        Category savedCategory = categoryService.createCategory(categoryToCreate);
+
+        return new ResponseEntity<>(
+                categoryMapper.toDto(savedCategory),
+                HttpStatus.CREATED);
     }
-    
+
 }
