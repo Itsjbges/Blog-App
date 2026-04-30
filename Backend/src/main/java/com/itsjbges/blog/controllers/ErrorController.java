@@ -11,7 +11,8 @@ import com.itsjbges.blog.domain.dtos.ApiErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@ControllerAdvice
+@ControllerAdvice // Suruh Spring denger the whole controller, klo ada throw exception maka akan
+                  // dihandle disini
 @Slf4j
 public class ErrorController {
 
