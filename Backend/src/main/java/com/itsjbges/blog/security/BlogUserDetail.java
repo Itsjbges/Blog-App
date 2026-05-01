@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@RequiredArgsConstructor // Act as a bridge between entity database and the spring security framework
 public class BlogUserDetail implements UserDetails {
 
     private final User user;

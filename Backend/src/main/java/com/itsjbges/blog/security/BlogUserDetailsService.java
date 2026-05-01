@@ -10,7 +10,9 @@ import com.itsjbges.blog.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class BlogUserDetailsService implements UserDetailsService {
+public class BlogUserDetailsService implements UserDetailsService { // Class ini ngebantu UserDetails class untuk
+                                                                    // actually go into the db and find the value and
+                                                                    // wrap it into a UserDetail object
 
     private final UserRepository userRepository;
 

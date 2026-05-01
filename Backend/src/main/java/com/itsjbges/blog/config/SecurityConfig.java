@@ -63,12 +63,15 @@ public class SecurityConfig { // Defines who is allowed to access which parts of
         return http.build();
     }
 
-    @Bean
+    @Bean // Perlu adain ini & UserDetailsService untuk authenticationManager
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Bean
+    @Bean // Take an unauthenticated object and return a fully authenticated one. Dilakuin
+          // dengan cara first dia panggil UserDetailsService untuk cari the user then dia
+          // pake passwordEncoder untuk test if the password match or not, klo iya
+          // authenticate klo gk reject
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
