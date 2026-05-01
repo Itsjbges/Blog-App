@@ -40,7 +40,8 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDto> createCategory(
+    public ResponseEntity<CategoryDto> createCategory( // Dengan @RequestBody Spring minta the incoming API call untuk
+                                                       // follow the DTO structure
             @Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
 
         Category categoryToCreate = categoryMapper.toEntity(createCategoryRequest);

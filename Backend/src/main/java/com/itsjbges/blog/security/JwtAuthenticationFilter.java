@@ -31,14 +31,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (token != null) {
                 UserDetails userDetails = authenticationService.validateToken(token);
 
+                // Perlu bikin this class variable supaya bisa use the SecurityContextHolder gr"
+                // dia cmn accept parameters that implement Authenticate
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities());
+                        userDetails, // Principals/userDetails implementation
+                        null, // Credentials/password, gk perlul gr" JWT Token udh prove the identity
+                        userDetails.getAuthorities()); // Authorities of the user
 
+                // Kasi tw the entire programm klo this user is either authenticated or not
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
                 if (userDetails instanceof BlogUserDetail) {
+                    // Supaya bisa pake @RequestAttributes di controller untuk dptin a certain
+                    // attributes lbh gampang
                     request.setAttribute("userId", ((BlogUserDetail) userDetails).getId());
                 }
             }
@@ -50,6 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    // HttpServletRequest itu di Server side, meanwhile HttpRequest itu Client side
     private String extractToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {

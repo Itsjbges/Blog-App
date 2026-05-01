@@ -64,7 +64,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private String extractUsername(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
+                .setSigningKey(getSigningKey()) // Klo the Token a match, maka kt decode the token, else akan throw a
+                                                // Signature Exception. Disini where the actual validation happens.
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
