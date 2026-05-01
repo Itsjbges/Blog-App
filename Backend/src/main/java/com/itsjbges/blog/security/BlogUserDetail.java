@@ -58,5 +58,5 @@ public class BlogUserDetail implements UserDetails {
     public UUID getId() {
         return user.getId();
     }
-    
+
 }

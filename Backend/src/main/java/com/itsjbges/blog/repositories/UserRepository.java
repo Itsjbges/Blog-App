@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.itsjbges.blog.domain.entities.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID>{
-    
+public interface UserRepository extends JpaRepository<User, UUID> {
+
     Optional<User> findByEmail(String email);
 }

@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     request.setAttribute("userId", ((BlogUserDetail) userDetails).getId());
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             // Don't throw exception, just don't authenticate the user
             log.warn("Received invalid auth token");
         }

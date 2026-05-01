@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.itsjbges.blog.domain.entities.Post;
 
 @Repository
-public interface PostCategory extends JpaRepository<Post, UUID>{
+public interface PostCategory extends JpaRepository<Post, UUID> {
 
 }

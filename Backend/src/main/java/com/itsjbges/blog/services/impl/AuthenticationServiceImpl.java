@@ -22,8 +22,8 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl implements AuthenticationService{
-    
+public class AuthenticationServiceImpl implements AuthenticationService {
+
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
 
@@ -35,7 +35,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Override
     public UserDetails authenticate(String email, String password) {
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(email, password));
+                new UsernamePasswordAuthenticationToken(email, password));
         return userDetailsService.loadUserByUsername(email);
     }
 
@@ -43,12 +43,12 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return Jwts.builder()
-            .setClaims(claims)
-            .setSubject(userDetails.getUsername())
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + jwtExpiryMs))
-            .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-            .compact();
+                .setClaims(claims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiryMs))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     @Override
@@ -64,10 +64,10 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     private String extractUsername(String token) {
         Claims claims = Jwts.parserBuilder()
-        .setSigningKey(getSigningKey())
-        .build()
-        .parseClaimsJws(token)
-        .getBody();
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
 
         return claims.getSubject();
     }

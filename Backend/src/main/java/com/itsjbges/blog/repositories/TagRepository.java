@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.itsjbges.blog.domain.entities.Tag;
 
 @Repository
-public interface TagRepository extends JpaRepository<Tag, UUID>{
+public interface TagRepository extends JpaRepository<Tag, UUID> {
 
 }

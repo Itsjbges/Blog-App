@@ -8,8 +8,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 @SpringBootApplication
 public class BlogApplication {
 
-	public static void main(String[] args) {
-		Dotenv dotenv = Dotenv.configure()
+    public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.configure()
                 .ignoreIfMissing()
                 .load();
 
@@ -17,7 +17,7 @@ public class BlogApplication {
             System.setProperty(entry.getKey(), entry.getValue());
         });
 
-		SpringApplication.run(BlogApplication.class, args);
-	}
+        SpringApplication.run(BlogApplication.class, args);
+    }
 
 }

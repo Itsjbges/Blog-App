@@ -20,7 +20,8 @@ import com.itsjbges.blog.security.JwtAuthenticationFilter;
 import com.itsjbges.blog.services.AuthenticationService;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig { // Defines who is allowed to access which parts of your API and how the system
+                              // verifies their identity.
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationService authenticationService) {
@@ -35,10 +36,10 @@ public class SecurityConfig {
 
         userRepository.findByEmail(email).orElseGet(() -> {
             User newUser = User.builder()
-                            .name("Test User")
-                            .email(email)
-                            .password(passwordEncoder().encode("password"))
-                            .build();
+                    .name("Test User")
+                    .email(email)
+                    .password(passwordEncoder().encode("password"))
+                    .build();
             return userRepository.save(newUser);
         });
 
@@ -46,16 +47,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
+            throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll() // Semua GET api calls dikasih tanpa perlu authenticated
-                    .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/v1/tags/**").permitAll()
-                    .anyRequest().authenticated()) // anything else maka perlu authenticated dlu
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll() // Semua GET api calls dikasih tanpa
+                                                                                 // perlu authenticated
+                .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/tags/**").permitAll()
+                .anyRequest().authenticated()) // anything else maka perlu authenticated dlu
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -66,7 +69,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager (AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 

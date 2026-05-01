@@ -22,7 +22,6 @@ public interface CategoryMapper {
     @Mapping(target = "postCount", source = "posts", qualifiedByName = "calculatePostCount")
     CategoryDto toDto(Category category);
 
-
     // MapStruct liet variables di source and the target then map it
     // Mknya perlu ada ReportingPolicy.IGNORE supaya variable yg gmw ada di DTO
     // Bisa di ignore and code kt gk throw error
