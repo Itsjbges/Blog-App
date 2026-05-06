@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -39,10 +40,11 @@ public class TagServiceImpl implements TagService {
                 .filter(name -> !existingTagNames.contains(name))
                 .map(name -> Tag.builder()
                         .name(name).posts(new HashSet<>())
-                        .build()).collect(Collectors.toList());
+                        .build())
+                .collect(Collectors.toList());
 
         List<Tag> savedTags = new ArrayList<>();
-        
+
         if (!newTags.isEmpty()) {
             savedTags = tagRepository.saveAll(newTags);
         }
@@ -50,6 +52,19 @@ public class TagServiceImpl implements TagService {
         savedTags.addAll(existingsTags);
 
         return savedTags;
+    }
+
+    @Transactional
+    @Override
+    public void deleteTag(UUID id) {
+        tagRepository.findById(id).ifPresent(tag -> {
+            if (!tag.getPosts().isEmpty()) {
+                throw new IllegalStateException("Cannot delete tag with posts");
+            }
+
+            tagRepository.deleteById(id);
+        });
+
     }
 
 }
