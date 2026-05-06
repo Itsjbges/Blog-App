@@ -5,12 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itsjbges.blog.domain.entities.Category;
 import com.itsjbges.blog.repositories.CategoryRepository;
 import com.itsjbges.blog.services.CategoryService;
 
-import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -50,4 +51,11 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    @Override
+    public Category getCategoryById(UUID id) {
+        return categoryRepository.findById(id)
+                        .orElseThrow( () -> new EntityNotFoundException("Category not found with id:  " + id));
+    }
+
+    
 }
