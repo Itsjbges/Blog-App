@@ -15,7 +15,6 @@ import com.itsjbges.blog.repositories.TagRepository;
 import com.itsjbges.blog.services.TagService;
 
 import jakarta.persistence.EntityNotFoundException;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -72,7 +71,18 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag getTagById(UUID id) {
         return tagRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Tag not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Tag not found with id: " + id));
     }
-    
+
+    @Override
+    public List<Tag> getTagByIds(Set<UUID> ids) {
+        List<Tag> foundTags = tagRepository.findAllById(ids);
+
+        if (foundTags.size() != ids.size()) {
+            throw new EntityNotFoundException("Not all specified tag IDs exists");
+        }
+
+        return foundTags;
+    }
+
 }

@@ -3,13 +3,19 @@ package com.itsjbges.blog.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.catalina.connector.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itsjbges.blog.domain.CreatePostRequest;
+import com.itsjbges.blog.domain.dtos.CreatePostRequestsDto;
 import com.itsjbges.blog.domain.dtos.PostDto;
 import com.itsjbges.blog.domain.entities.Post;
 import com.itsjbges.blog.domain.entities.User;
@@ -44,6 +50,24 @@ public class PostController {
         List<Post> draftPosts = postService.getDraftPosts(loggedInUser);
         List<PostDto> postDtos = draftPosts.stream().map(postMapper::toDto).toList();
         return ResponseEntity.ok(postDtos);
+    }
+
+    @PostMapping
+    public ResponseEntity<PostDto> createPost(
+            @RequestBody CreatePostRequestsDto createPostRequestsDto,
+            @RequestAttribute UUID userId) {
+
+        User loggedInUser = userService.getUserById(userId);
+        CreatePostRequest createCategoryRequest = postMapper.toCreatePostRequest(createPostRequestsDto);
+
+        Post createdPost = postService.createPost(loggedInUser, createCategoryRequest);
+
+        PostDto createdPostDto = postMapper.toDto(createdPost);
+
+        return new ResponseEntity<>(
+            createdPostDto,
+            HttpStatus.CREATED
+        );
     }
 
 }
