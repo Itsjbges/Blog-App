@@ -5,8 +5,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import com.itsjbges.blog.domain.CreatePostRequest;
+import com.itsjbges.blog.domain.UpdatePostRequest;
 import com.itsjbges.blog.domain.dtos.CreatePostRequestsDto;
 import com.itsjbges.blog.domain.dtos.PostDto;
+import com.itsjbges.blog.domain.dtos.UpdatePostRequestDto;
 import com.itsjbges.blog.domain.entities.Post;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -18,4 +20,6 @@ public interface PostMapper {
     PostDto toDto(Post post);
 
     CreatePostRequest toCreatePostRequest(CreatePostRequestsDto dto);
+
+    UpdatePostRequest toUpdatePostRequest(UpdatePostRequestDto dto);
 }
