@@ -10,6 +10,7 @@ import com.itsjbges.blog.domain.PostStatus;
 import com.itsjbges.blog.domain.entities.Category;
 import com.itsjbges.blog.domain.entities.Post;
 import com.itsjbges.blog.domain.entities.Tag;
+import com.itsjbges.blog.domain.entities.User;
 import com.itsjbges.blog.repositories.PostRepository;
 import com.itsjbges.blog.services.CategoryService;
 import com.itsjbges.blog.services.PostService;
@@ -55,4 +56,10 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAllByStatus(PostStatus.PUBLISHED);
     }
 
+    @Override
+    public List<Post> getDraftPosts(User user) {
+        return postRepository.findAllByAuthorAndStatus(user, PostStatus.DRAFT);
+    }
+
+    
 }
