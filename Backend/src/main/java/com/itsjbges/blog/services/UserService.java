@@ -6,4 +6,6 @@ import com.itsjbges.blog.domain.entities.User;
 
 public interface UserService {
     User getUserById(UUID id);
+
+    User createUser(String name, String password, String email);
 }

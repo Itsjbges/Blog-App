@@ -12,4 +12,6 @@ import com.itsjbges.blog.domain.entities.User;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByEmail(String email);
+
+    boolean existsByEmailIgnoreCase(String email);
 }

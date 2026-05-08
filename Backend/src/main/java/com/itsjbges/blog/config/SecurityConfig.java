@@ -51,6 +51,7 @@ public class SecurityConfig { // Defines who is allowed to access which parts of
             throws Exception {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/posts/drafts").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll() // Semua GET api calls dikasih tanpa
                                                                                  // perlu authenticated
