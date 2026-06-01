@@ -30,7 +30,7 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final CategoryService categoryService;
-    private TagService tagService;
+    private final TagService tagService;
 
     private static final int WORDS_PER_MINUTE = 200;
 
@@ -79,6 +79,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Post createPost(User user, CreatePostRequest createPostRequest) {
+
         Post newPost = new Post();
         newPost.setTitle(createPostRequest.getTitle());
         newPost.setContent(createPostRequest.getContent());
